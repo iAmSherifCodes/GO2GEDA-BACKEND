@@ -1,18 +1,19 @@
 package com.go2geda.data.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.List;
 @Getter
 @Setter
-@AllArgsConstructor
-@Document
+@Entity
 public class Group {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @OneToMany
     private List<User>users;
+
+    @OneToMany
     private List<Chat>chats;
 }

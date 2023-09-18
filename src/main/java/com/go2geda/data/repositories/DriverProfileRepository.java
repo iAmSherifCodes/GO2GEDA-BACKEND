@@ -1,6 +1,9 @@
 package com.go2geda.data.repositories;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+import com.go2geda.data.model.DriversProfile;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface DriverProfileRepository extends MongoRepository<DriverRepository,String> {
+@Repository
+public interface DriverProfileRepository extends JpaRepository<DriversProfile,Long> {
 }

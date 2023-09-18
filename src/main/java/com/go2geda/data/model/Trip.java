@@ -1,19 +1,19 @@
 package com.go2geda.data.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 @Getter
 @Setter
-@AllArgsConstructor
-@Document
+@Entity
 public class Trip {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
+    @Enumerated(EnumType.STRING)
+    private TripStatus tripStatus;
     private String from;
     private String to;
     private Integer pricePerSeat;

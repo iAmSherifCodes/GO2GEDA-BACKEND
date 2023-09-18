@@ -1,19 +1,18 @@
 package com.go2geda.data.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
-@Document
+@Entity
 public class Profile {
  @Id
- private String id;
+ @GeneratedValue(strategy = GenerationType.AUTO)
+ private Long id;
+
+ @OneToOne(cascade = CascadeType.PERSIST)
  private Address address;
- private MultipartFile profilePicture;
 
-
+ private String profilePicture;
 }

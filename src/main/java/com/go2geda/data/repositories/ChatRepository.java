@@ -1,7 +1,9 @@
 package com.go2geda.data.repositories;
 
 import com.go2geda.data.model.Chat;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface ChatRepository extends MongoRepository<Chat,String> {
+@Repository
+public interface ChatRepository extends JpaRepository<Chat,Long> {
 }

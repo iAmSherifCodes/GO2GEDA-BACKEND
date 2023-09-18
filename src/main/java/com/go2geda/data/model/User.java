@@ -1,28 +1,34 @@
 package com.go2geda.data.model;
 
 import com.go2geda.enums.Role;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-
 import java.util.List;
 
-@Document
+@Entity
 @Setter
 @Getter
 public class User {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private  String firstName;
     private String lastName;
     private String  email;
     private String phoneNumber;
     private String password;
-    private  Review review;
-    private  Profile profile;
+    @OneToMany
+    private List<Review> reviews;
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Profile profile;
+    @OneToMany
     private List<Trip>trips;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Wallet wallet;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
 
 

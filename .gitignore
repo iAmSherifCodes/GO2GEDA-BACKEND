@@ -30,4 +30,5 @@ build/
 !**/src/test/**/build/
 
 ### VS Code ###
-.vscode/
+.vscode/ CONFIG ###
+C:\Users\SHERIF\IdeaProjects\GO2GEDA-BACKEND\GO2GEDA\src\main\resources\secret.properties

@@ -1,11 +1,18 @@
 package com.go2geda.data.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-@AllArgsConstructor
+@Entity
 public class Review {
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @ManyToOne
+    private User user;
+    private String review;
+
 }

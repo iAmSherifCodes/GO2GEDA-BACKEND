@@ -1,19 +1,18 @@
 package com.go2geda.data.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.time.LocalDateTime;
 @Getter
 @Setter
-@AllArgsConstructor
-@Document
+@Entity
 public class Chat {
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    @OneToOne
     private User sender;
     private String message;
     private LocalDateTime time;

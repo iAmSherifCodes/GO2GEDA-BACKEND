@@ -1,7 +1,10 @@
 package com.go2geda.data.repositories;
 
 import com.go2geda.data.model.Trip;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface TripRepository extends MongoRepository<Trip,String> {
+@Repository
+
+public interface TripRepository extends JpaRepository<Trip,Long> {
 }
