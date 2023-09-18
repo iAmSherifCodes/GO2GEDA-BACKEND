@@ -1,17 +1,19 @@
 package com.go2geda.data.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.mongodb.core.mapping.Document;
 
 @Getter
 @Setter
-@AllArgsConstructor
-@Document
+@Entity
 public class DriversProfile extends Profile {
+ @Id
+ @GeneratedValue(strategy = GenerationType.AUTO)
+ private Long id;
+ @OneToOne
  private DriverLicence driverLicence;
+ @OneToOne
  private AccountDetails accountDetails;
-
 
 }

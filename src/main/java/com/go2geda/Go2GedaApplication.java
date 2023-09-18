@@ -10,11 +10,6 @@ public class Go2GedaApplication {
 	public static void main(String[] args) {
 
 		SpringApplication.run(Go2GedaApplication.class, args);
-		User user = new User();
-		user.setEmail("jjo2@gmail.com");
-
-		System.out.println(user.getEmail());
-		System.out.println(user.getId());
 	}
 
 }

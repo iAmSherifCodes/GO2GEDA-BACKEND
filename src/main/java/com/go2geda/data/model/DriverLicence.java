@@ -1,18 +1,18 @@
 package com.go2geda.data.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
-@AllArgsConstructor
-@Document
+@Entity
 public class DriverLicence {
  @Id
- private String id;
- private MultipartFile frontPicture;
- private MultipartFile backPicture;
+ @GeneratedValue(strategy = GenerationType.AUTO)
+ private Long id;
+ private String frontPicture;
+ private String backPicture;
 }

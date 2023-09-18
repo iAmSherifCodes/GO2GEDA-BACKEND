@@ -1,22 +1,22 @@
 package com.go2geda.data.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.web.multipart.MultipartFile;
 @Getter
 @Setter
-@AllArgsConstructor
-@Document
+@Entity
 public class Fleet {
     @Id
-private String id;
-private String plateNumber;
-private String color;
-private MultipartFile picture;
-private Integer numberOfSets;
-private MultipartFile insuranceDocument;
-private String model;
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    private String plateNumber;
+    private String color;
+    private String picture;
+    private Integer numberOfSets;
+    private String insuranceDocument;
+    private String model;
 }

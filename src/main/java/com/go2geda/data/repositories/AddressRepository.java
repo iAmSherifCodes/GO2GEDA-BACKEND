@@ -1,7 +1,9 @@
 package com.go2geda.data.repositories;
 
 import com.go2geda.data.model.Address;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface AddressRepository extends MongoRepository<Address,String> {
+@Repository
+public interface AddressRepository extends JpaRepository<Address,Long> {
 }

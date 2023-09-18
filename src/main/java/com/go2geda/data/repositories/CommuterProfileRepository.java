@@ -1,7 +1,9 @@
 package com.go2geda.data.repositories;
 
 import com.go2geda.data.model.CommuterProfile;
-import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
-public interface CommuterProfileRepository extends MongoRepository<CommuterProfile,String> {
+@Repository
+public interface CommuterProfileRepository extends JpaRepository<CommuterProfile,Long> {
 }
