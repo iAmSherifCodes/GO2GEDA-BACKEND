@@ -9,12 +9,14 @@ import java.util.List;
 @Entity
 @Setter
 @Getter
+@Table(name= "Go2GedaUser")
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private  String firstName;
     private String lastName;
+    @Column(unique = true, nullable = false)
     private String  email;
     private String phoneNumber;
     private String password;
