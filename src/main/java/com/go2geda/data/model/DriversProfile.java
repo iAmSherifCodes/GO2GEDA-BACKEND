@@ -7,10 +7,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
-public class DriversProfile extends Profile {
+@Table(name = "DriverProfileTable")
+public class DriversProfile{
  @Id
  @GeneratedValue(strategy = GenerationType.AUTO)
  private Long id;
+
+ @OneToOne
+ private Profile profile;
  @OneToOne
  private DriverLicence driverLicence;
  @OneToOne

@@ -7,20 +7,17 @@ import lombok.Setter;
 @Getter
 @Setter
 @Entity
+@Table(name = "DriverTable")
 public class Driver{
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
-
    @OneToOne
    private User user;
-
    @OneToOne
    private Fleet fleet;
-
 //   @Enumerated(EnumType.STRING)
 //   private Role role;
-
    @OneToOne
    private DriversProfile profile;
 
