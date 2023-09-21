@@ -14,6 +14,9 @@ public class AppConfig {
     @Value("${mail.api.key}")
     private String mailApiKey;
 
+    @Value("${mail.brevo.address}")
+    private String brevoMailAddress;
+
 
     @Value("${app.base.url}")
     private String baseUrl;
