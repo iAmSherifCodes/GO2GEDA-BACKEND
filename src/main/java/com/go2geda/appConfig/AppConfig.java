@@ -1,8 +1,17 @@
 package com.go2geda.appConfig;
 
+import com.go2geda.data.model.User;
+import com.go2geda.dto.request.EmailSenderRequest;
+import com.go2geda.dto.request.MailInfo;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.go2geda.utils.AppUtils.generateActivationLink;
+import static com.go2geda.utils.AppUtils.getMailTemplate;
 
 @Configuration @Getter
 public class AppConfig {
@@ -20,5 +29,6 @@ public class AppConfig {
 
     @Value("${app.base.url}")
     private String baseUrl;
+
 
 }

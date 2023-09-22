@@ -1,7 +1,9 @@
 package com.go2geda.service;
 
 import com.go2geda.appConfig.AppConfig;
+import com.go2geda.data.model.User;
 import com.go2geda.dto.request.EmailSenderRequest;
+import com.go2geda.dto.request.MailInfo;
 import com.go2geda.dto.response.OkResponse;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +12,14 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static com.go2geda.appConfig.AppConfig.SPACE;
+import static com.go2geda.appConfig.AppConfig.WELCOME_MAIL_SUBJECT;
+import static com.go2geda.utils.AppUtils.generateActivationLink;
+import static com.go2geda.utils.AppUtils.getMailTemplate;
 
 @Service @AllArgsConstructor
 public class BrevoMailService implements MailService{
@@ -30,5 +40,20 @@ public class BrevoMailService implements MailService{
                 restTemplate.postForEntity(brevoMailAddress, request, OkResponse.class);
         OkResponse emailNotificationResponse = response.getBody();
         return emailNotificationResponse;
+    }
+
+    private EmailSenderRequest buildEmailRequest(User savedUser){
+        EmailSenderRequest request =new EmailSenderRequest();
+        List<MailInfo> recipients = new ArrayList<>();
+        MailInfo recipient = new MailInfo(savedUser.getFirstName() + SPACE + savedUser.getLastName(), savedUser.getEmail());
+        recipients.add(recipient);
+        request.setTo(recipients);
+        request.setSubject(WELCOME_MAIL_SUBJECT);
+        String activationLink =
+                generateActivationLink(appConfig.getBaseUrl(), savedUser.getEmail());
+        String emailTemplate = getMailTemplate();
+        String mailContent = String.format(emailTemplate, activationLink);
+        request.setHtmlContent(mailContent);
+        return request;
     }
 }

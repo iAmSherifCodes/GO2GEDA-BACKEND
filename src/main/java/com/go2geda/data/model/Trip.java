@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 public class Trip {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
     @Enumerated(EnumType.STRING)
     private TripStatus tripStatus;
     private String from;

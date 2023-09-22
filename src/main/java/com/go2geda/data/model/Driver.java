@@ -16,8 +16,6 @@ public class Driver{
    private User user;
    @OneToOne
    private Fleet fleet;
-//   @Enumerated(EnumType.STRING)
-//   private Role role;
    @OneToOne
    private DriversProfile profile;
 
