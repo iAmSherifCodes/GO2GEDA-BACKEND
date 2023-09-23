@@ -16,8 +16,6 @@ public class Driver{
    private User user;
    @OneToOne
    private Fleet fleet;
-   @OneToOne
-   private DriversProfile profile;
 
 
 }

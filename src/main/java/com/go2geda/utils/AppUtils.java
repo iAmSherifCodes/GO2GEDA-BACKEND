@@ -37,4 +37,6 @@ public class AppUtils {
         String token = generateVerificationToken(email);
         return baseUrl+ACTIVATE_ACCOUNT_PATH+token;
     }
+
+
 }

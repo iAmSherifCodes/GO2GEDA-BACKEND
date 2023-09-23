@@ -14,6 +14,4 @@ public class Commuter{
     private Long id;
     @OneToOne
     private User user;
-    @OneToOne
-    private CommuterProfile commuterProfile;
 }

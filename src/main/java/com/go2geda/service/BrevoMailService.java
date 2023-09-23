@@ -28,7 +28,7 @@ public class BrevoMailService implements MailService{
 
     @Override
     public OkResponse send(EmailSenderRequest emailSenderRequest) {
-        String brevoMailAddress = "https://api.brevo.com/v3/smtp/email";
+//        String brevoMailAddress = "https://api.brevo.com/v3/smtp/email";
         RestTemplate restTemplate = new RestTemplate();
         HttpHeaders headers = new HttpHeaders();
         headers.set("api-key", appConfig.getMailApiKey());
@@ -37,23 +37,9 @@ public class BrevoMailService implements MailService{
                 new HttpEntity<>(emailSenderRequest, headers);
 
         ResponseEntity<OkResponse> response =
-                restTemplate.postForEntity(brevoMailAddress, request, OkResponse.class);
+                restTemplate.postForEntity(appConfig.getBrevoMailAddress(), request, OkResponse.class);
         OkResponse emailNotificationResponse = response.getBody();
         return emailNotificationResponse;
     }
 
-    private EmailSenderRequest buildEmailRequest(User savedUser){
-        EmailSenderRequest request =new EmailSenderRequest();
-        List<MailInfo> recipients = new ArrayList<>();
-        MailInfo recipient = new MailInfo(savedUser.getFirstName() + SPACE + savedUser.getLastName(), savedUser.getEmail());
-        recipients.add(recipient);
-        request.setTo(recipients);
-        request.setSubject(WELCOME_MAIL_SUBJECT);
-        String activationLink =
-                generateActivationLink(appConfig.getBaseUrl(), savedUser.getEmail());
-        String emailTemplate = getMailTemplate();
-        String mailContent = String.format(emailTemplate, activationLink);
-        request.setHtmlContent(mailContent);
-        return request;
-    }
 }
