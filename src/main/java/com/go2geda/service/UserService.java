@@ -12,8 +12,6 @@ import com.go2geda.dto.response.RegisterUserResponse;
 public interface UserService {
     LoginResponse login(LoginRequest loginRequest);
     BasicInformation findUserByEmail(String email);
-    Driver findDriverByUser(User user);
-    Commuter findCommuterByUser(User user);
     OkResponse verifyAddress(AddressVerificationRequest addressVerificationRequest, Long userId);
     OkResponse verifyDriverLicense(DriverLicenceVerificationRequest driverLicenceVerificationRequest);
 

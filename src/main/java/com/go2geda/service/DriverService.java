@@ -10,7 +10,8 @@ import com.go2geda.dto.response.RegisterUserResponse;
 public interface DriverService {
     RegisterUserResponse register(DriverRegisterUserRequest request);
 //    OkResponse verifyDriverAccountDetails(AccountDetailsVerificationRequest accountDetailsVerificationRequest, Long userId);
-    Driver findDriverByUser(User user);
-    OkResponse verifyDriverAccountDetails(AccountDetailsVerificationRequest accountDetailsVerificationRequest, Long userId);
+    Driver findDriverByEmail(String email);
+    Driver findDriverById(Long driverId);
+    OkResponse verifyDriverAccountDetails(AccountDetailsVerificationRequest accountDetailsVerificationRequest, String email);
 
 }

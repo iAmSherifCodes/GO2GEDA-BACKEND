@@ -30,7 +30,7 @@ public class BuildEmailRequest {
         String activationLink =
                 generateActivationLink(appConfig.getBaseUrl(), savedUser.getEmail());
         String emailTemplate = getMailTemplate();
-        String mailContent = String.format(emailTemplate, savedUser.getFirstName());
+        String mailContent = String.format(emailTemplate, savedUser.getFirstName(), activationLink);
         request.setHtmlContent(mailContent);
         return request;
     }

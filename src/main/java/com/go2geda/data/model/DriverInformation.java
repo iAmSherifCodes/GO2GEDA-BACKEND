@@ -12,9 +12,9 @@ public class DriverInformation {
  @Id
  @GeneratedValue(strategy = GenerationType.AUTO)
  private Long id;
- @OneToOne
+ @OneToOne(cascade = CascadeType.ALL)
  private DriverLicence driverLicence;
- @OneToOne
+ @OneToOne(cascade = CascadeType.ALL)
  private AccountDetails accountDetails;
 
 }

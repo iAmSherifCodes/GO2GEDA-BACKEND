@@ -60,17 +60,6 @@ public class Go2GedaUserService implements UserService{
         return basicInformationRepository.findByEmail(email).orElseThrow(()-> new UserNotFound(USER_NOT_FOUND.name()));
     }
 
-    @Override
-    public Driver findDriverByUser(User user) {
-        return null;
-//        return driverRepository.findByUser(user).orElseThrow(()-> new UserNotFound(USER_NOT_FOUND.name()));
-    }
-
-    @Override
-    public Commuter findCommuterByUser(User user) {
-        return commuterRepository.findCommuterByUser(user).orElseThrow(()-> new UserNotFound(USER_NOT_FOUND.name()));
-    }
-
     private User findUserById(Long id){
         return userRepository.findById(id).orElseThrow(()->new UserNotFound(USER_NOT_FOUND.name()));
     }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController @AllArgsConstructor
 @RequestMapping("api/v1/go2geda")
-@CrossOrigin("http://localhost:3000/")
+//@CrossOrigin("http://localhost:3000/")
 public class Go2GedaController {
 
     public final UserService userService;
