@@ -16,6 +16,8 @@ public class AppUtils {
     public static final String APP_NAME = "Go2Geda";
     public static final String APP_EMAIL = "go2geda@mail.com";
     public static final String EMPTY_STRING ="";
+
+    public static final String VERIFICATION_SUCCESSFUL = "VERIFICATION_SUCCESSFUL";
     private static final String MAIL_TEMPLATE_LOCATION = "C:\\Users\\SHERIF\\IdeaProjects\\GO2GEDA-BACKEND\\GO2GEDA\\src\\main\\resources\\static\\emailHtml.html";
 
     public static String getMailTemplate() {
@@ -28,6 +30,8 @@ public class AppUtils {
             throw new Go2gedaBaseException(exception.getMessage());
         }
     }
+
+
 
     public static String generateActivationLink(String baseUrl, String email){
         String token = generateVerificationToken(email);
