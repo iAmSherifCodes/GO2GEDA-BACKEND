@@ -117,28 +117,27 @@ public class DriverServiceTest {
     }
 
     @Test
-    void verifyCommuterAddress(){
-        CommuterRegisterUserRequest firstCommuterUser = new CommuterRegisterUserRequest();
-        firstCommuterUser.setEmail("verifycommuteradress@gmail.com");
-        firstCommuterUser.setFirstName("Dey");
-        firstCommuterUser.setLastName("Play");
-        firstCommuterUser.setPhoneNumber("90787878");
-        firstCommuterUser.setPassword("deyplaypassword");
+    void verifyDriverAddress(){
+        DriverRegisterUserRequest registerUserRequest = new DriverRegisterUserRequest();
+        registerUserRequest.setEmail("verifydriveradress@gmail.com");
+        registerUserRequest.setFirstName("Dey");
+        registerUserRequest.setLastName("Play");
+        registerUserRequest.setPhoneNumber("90787878");
+        registerUserRequest.setPassword("deyplaypassword");
 
-//        commuterService.register(firstCommuterUser);
+        driverService.register(registerUserRequest);
 
         String address = "13 ST. Jones";
+        String localGovernment = "Yaba";
+        String state = "Lagos";
 
         AddressVerificationRequest request = new AddressVerificationRequest();
-        request.setAddress(address);
+        request.setHomeAddress(address);
+        request.setState(state);
+        request.setLocalGovernment(localGovernment);
 
-//        User user = userService.findUserByEmail("verifycommuteradress@gmail.com");
+        OkResponse response = driverService.verifyAddress(request,  "verifydriveradress@gmail.com");
 
-//        Commuter foundDriver = userService.findCommuterByUser(user);
-
-
-//        OkResponse response = userService.verifyAddress(request, foundDriver.getId());
-
-//        assertThat(response).isNotNull();
+        assertThat(response).isNotNull();
     }
 }

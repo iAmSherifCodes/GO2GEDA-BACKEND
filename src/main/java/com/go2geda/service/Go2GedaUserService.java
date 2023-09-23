@@ -4,6 +4,7 @@ import com.go2geda.appConfig.AppConfig;
 import com.go2geda.data.model.*;
 import com.go2geda.data.repositories.*;
 import com.go2geda.dto.request.*;
+import com.go2geda.dto.response.Go2gedaResponse;
 import com.go2geda.dto.response.LoginResponse;
 import com.go2geda.dto.response.OkResponse;
 import com.go2geda.dto.response.RegisterUserResponse;
@@ -36,54 +37,29 @@ public class Go2GedaUserService implements UserService{
     private final AppConfig appConfig;
     private final MailService mailService;
 
-
-
-    @Override
-    public LoginResponse login(LoginRequest loginRequest) {
-        String email = loginRequest.getEmail();
-        String password = loginRequest.getPassword();
-        //Todo
-        // fix this method
-        // fix this class
-
-//        User foundUser = userRepository.findByEmail(email).filter(user->user.getPassword().equals(password)).orElseThrow(()->new UserNotFound(USER_NOT_FOUND.name()));
-
-//        log.info(String.valueOf(foundUser.getRole()));
-        LoginResponse response = new LoginResponse();
-        response.setMessage(LOGIN_SUCCESSFUL.name());
-        return response;
-
-    }
-
-    @Override
-    public BasicInformation findUserByEmail(String email) {
-        return basicInformationRepository.findByEmail(email).orElseThrow(()-> new UserNotFound(USER_NOT_FOUND.name()));
-    }
-
     private User findUserById(Long id){
         return userRepository.findById(id).orElseThrow(()->new UserNotFound(USER_NOT_FOUND.name()));
     }
 
 
     @Override
-    public OkResponse verifyAddress(AddressVerificationRequest addressVerificationRequest, Long userId) {
-        String address = addressVerificationRequest.getAddress();
+    public OkResponse verifyAddress(AddressVerificationRequest addressVerificationRequest, String userEmail) {
+        String address = addressVerificationRequest.getHomeAddress();
+        String state = addressVerificationRequest.getState();
+        String localG = addressVerificationRequest.getLocalGovernment();
 
         Address newAddress = new Address();
         newAddress.setHomeAddress(address);
+        newAddress.setState(state);
+        newAddress.setLocalGovernment(localG);
 
         Address savedAddress = addressRepository.save(newAddress);
-        User foundUser = findUserById(userId);
-        foundUser.setAddress(savedAddress);
+//        User foundUser = findUserById(userId);
+//        foundUser.setAddress(savedAddress);
+//
+//        userRepository.save(foundUser);
 
-        userRepository.save(foundUser);
 
-
-        return null;
-    }
-
-    @Override
-    public OkResponse verifyDriverLicense(DriverLicenceVerificationRequest driverLicenceVerificationRequest) {
         return null;
     }
 

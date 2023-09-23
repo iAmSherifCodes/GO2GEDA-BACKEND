@@ -20,7 +20,7 @@ public class User {
     private List<Review> reviews;
     @OneToMany
     private List<Trip>trips;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private Address address;
     private String profilePicture;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

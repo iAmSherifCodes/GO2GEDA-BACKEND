@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.RestController;
 //@CrossOrigin("http://localhost:3000/")
 public class Go2GedaController {
 
-    public final UserService userService;
     private final CommuterService commuterService;
     private final DriverService driverService;
 

@@ -4,10 +4,8 @@ import com.go2geda.data.model.*;
 import com.go2geda.data.repositories.BasicInformationRepository;
 import com.go2geda.data.repositories.DriverRepository;
 import com.go2geda.data.repositories.UserRepository;
-import com.go2geda.dto.request.AccountDetailsVerificationRequest;
-import com.go2geda.dto.request.DriverRegisterUserRequest;
-import com.go2geda.dto.request.EmailSenderRequest;
-import com.go2geda.dto.request.MailInfo;
+import com.go2geda.dto.request.*;
+import com.go2geda.dto.response.Go2gedaResponse;
 import com.go2geda.dto.response.OkResponse;
 import com.go2geda.dto.response.RegisterUserResponse;
 import com.go2geda.enums.Role;
@@ -23,11 +21,12 @@ import java.util.List;
 import static com.go2geda.appConfig.AppConfig.SPACE;
 import static com.go2geda.appConfig.AppConfig.WELCOME_MAIL_SUBJECT;
 import static com.go2geda.dto.response.ResponseMessage.REGISTRATION_SUCCESSFUL;
+import static com.go2geda.dto.response.ResponseMessage.VERIFIED_SUCCESSFUL;
 import static com.go2geda.exception.ExceptionMessage.USER_NOT_FOUND;
 import static com.go2geda.utils.AppUtils.*;
 
 @Service @AllArgsConstructor @Slf4j
-public class Go2gedaDriverService implements DriverService{
+public class Go2gedaDriverService implements DriverService, UserService{
 
 
     private final UserRepository userRepository;
@@ -58,7 +57,6 @@ public class Go2gedaDriverService implements DriverService{
 
 
         newUser.setBasicInformation(basicInformation);
-//        User savedUser = userRepository.save(newUser);
 
 
         Driver newDriver = new Driver();
@@ -79,15 +77,6 @@ public class Go2gedaDriverService implements DriverService{
     @Override
     public Driver findDriverByEmail(String email) {
         return driverRepository.findDriverByEmail(email).orElseThrow(()-> new UserNotFound(USER_NOT_FOUND.name()));
-    }
-
-    @Override
-    public Driver findDriverById(Long driverId) {
-        return null;
-    }
-
-    private User findUserById(Long userId){
-        return userRepository.findById(userId).orElseThrow(()->new UserNotFound(USER_NOT_FOUND.name()));
     }
 
     @Override
@@ -113,4 +102,33 @@ public class Go2gedaDriverService implements DriverService{
         return okResponse;
     }
 
+
+    @Override
+    public OkResponse verifyDriverLicense(DriverLicenceVerificationRequest driverLicenceVerificationRequest) {
+        return null;
+    }
+
+    @Override
+    public OkResponse verifyAddress(AddressVerificationRequest addressVerificationRequest, String email) {
+        String localGovernment = addressVerificationRequest.getLocalGovernment();
+        String state = addressVerificationRequest.getState();
+        String homeAddress = addressVerificationRequest.getHomeAddress();
+
+        Address newAddress = new Address();
+        newAddress.setHomeAddress(homeAddress);
+        newAddress.setState(state);
+        newAddress.setLocalGovernment(localGovernment);
+
+        Driver foundDriver = findDriverByEmail(email);
+        foundDriver.getUser().setAddress(newAddress);
+
+        driverRepository.save(foundDriver);
+
+        OkResponse response = new OkResponse();
+        response.setMessage(VERIFIED_SUCCESSFUL.name());
+
+        return response;
+
+
+    }
 }
