@@ -18,13 +18,13 @@ public class BrevoMailServiceTest {
 
     @Autowired
     private MailService mailService;
-    private EmailSenderRequest emailSenderRequest;
+//    private EmailSenderRequest emailSenderRequest;
 
     @Test
     void testEmail(){
-        emailSenderRequest = new EmailSenderRequest();
+        EmailSenderRequest emailSenderRequest = new EmailSenderRequest();
         emailSenderRequest.setSubject("WELCOME DEAR USER");
-        emailSenderRequest.setTo(Collections.singletonList(new MailInfo("test mail","gimivo5293@alvisani.com")));
+        emailSenderRequest.setTo(Collections.singletonList(new MailInfo("test mail","cashgraphicx@gmail.com")));
         emailSenderRequest.setHtmlContent(getMailTemplate());
 
         OkResponse response = mailService.send(emailSenderRequest);

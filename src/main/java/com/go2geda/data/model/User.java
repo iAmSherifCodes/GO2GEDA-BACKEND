@@ -14,26 +14,18 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private  String firstName;
-    private String lastName;
-    @Column(unique = true)
-    private String  email;
-    private String phoneNumber;
-    private String password;
+    @OneToOne(cascade = CascadeType.PERSIST)
+    private BasicInformation basicInformation;
     @OneToMany
     private List<Review> reviews;
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Profile profile;
     @OneToMany
     private List<Trip>trips;
-
+    @OneToOne(cascade = CascadeType.ALL)
+    private Address address;
+    private String profilePicture;
     @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Wallet wallet;
-
     @Enumerated(EnumType.STRING)
     private Role role;
-
-
-
 
 }

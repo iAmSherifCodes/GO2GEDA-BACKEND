@@ -12,12 +12,12 @@ public class Driver{
    @Id
    @GeneratedValue(strategy = GenerationType.AUTO)
    private Long id;
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL)
    private User user;
-   @OneToOne
+   @OneToOne(cascade = CascadeType.ALL)
    private Fleet fleet;
-   @OneToOne
-   private DriversProfile profile;
+   @OneToOne(cascade = CascadeType.ALL)
+   private DriverInformation driverInformation;
 
 
 }

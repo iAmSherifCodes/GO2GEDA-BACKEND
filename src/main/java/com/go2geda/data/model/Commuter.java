@@ -12,8 +12,6 @@ public class Commuter{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL)
     private User user;
-    @OneToOne
-    private CommuterProfile commuterProfile;
 }

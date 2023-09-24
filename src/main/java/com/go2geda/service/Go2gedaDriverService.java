@@ -1,31 +1,40 @@
 package com.go2geda.service;
 
-import com.go2geda.data.model.AccountDetails;
-import com.go2geda.data.model.Driver;
-import com.go2geda.data.model.DriversProfile;
-import com.go2geda.data.model.User;
+import com.go2geda.data.model.*;
+import com.go2geda.data.repositories.BasicInformationRepository;
 import com.go2geda.data.repositories.DriverRepository;
 import com.go2geda.data.repositories.UserRepository;
-import com.go2geda.dto.request.AccountDetailsVerificationRequest;
-import com.go2geda.dto.request.DriverRegisterUserRequest;
+import com.go2geda.dto.request.*;
+import com.go2geda.dto.response.Go2gedaResponse;
 import com.go2geda.dto.response.OkResponse;
 import com.go2geda.dto.response.RegisterUserResponse;
 import com.go2geda.enums.Role;
 import com.go2geda.exception.UserNotFound;
+import com.go2geda.utils.BuildEmailRequest;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import static com.go2geda.dto.response.ResponseMessage.REGISTRATION_SUCCESSFUL;
-import static com.go2geda.exception.ExceptionMessage.USER_NOT_FOUND;
-import static com.go2geda.utils.AppUtils.VERIFICATION_SUCCESSFUL;
+import java.util.ArrayList;
+import java.util.List;
 
-@Service @AllArgsConstructor
-public class Go2gedaDriverService implements DriverService{
+import static com.go2geda.appConfig.AppConfig.SPACE;
+import static com.go2geda.appConfig.AppConfig.WELCOME_MAIL_SUBJECT;
+import static com.go2geda.dto.response.ResponseMessage.REGISTRATION_SUCCESSFUL;
+import static com.go2geda.dto.response.ResponseMessage.VERIFIED_SUCCESSFUL;
+import static com.go2geda.exception.ExceptionMessage.USER_NOT_FOUND;
+import static com.go2geda.utils.AppUtils.*;
+
+@Service @AllArgsConstructor @Slf4j
+public class Go2gedaDriverService implements DriverService, UserService{
 
 
     private final UserRepository userRepository;
     private final DriverRepository driverRepository;
+    private final BasicInformationRepository basicInformationRepository;
+
+    private final BuildEmailRequest buildEmailRequest;
+    private final MailService mailService;
 
     @Override
     public RegisterUserResponse register(DriverRegisterUserRequest request) {
@@ -38,21 +47,25 @@ public class Go2gedaDriverService implements DriverService{
         User newUser = new User();
         newUser.setRole(Role.DRIVER);
 
+        BasicInformation basicInformation =new BasicInformation();
 
-        newUser.setFirstName(firstName);
-        newUser.setLastName(lastName);
-        newUser.setEmail(email);
-        newUser.setPassword(password);
-        newUser.setPhoneNumber(phoneNumber);
+        basicInformation.setFirstName(firstName);
+        basicInformation.setLastName(lastName);
+        basicInformation.setEmail(email);
+        basicInformation.setPassword(password);
+        basicInformation.setPhoneNumber(phoneNumber);
 
-        User savedUser = userRepository.save(newUser);
+
+        newUser.setBasicInformation(basicInformation);
+
 
         Driver newDriver = new Driver();
-        newDriver.setUser(savedUser);
+        newDriver.setUser(newUser);
 
-        driverRepository.save(newDriver);
-//        EmailSenderRequest emailSenderRequest = buildEmailRequest(savedUser);
-//        mailService.send(emailSenderRequest);
+        Driver savedDriver = driverRepository.save(newDriver);
+        log.info(savedDriver.toString());
+        EmailSenderRequest emailSenderRequest = buildEmailRequest.buildEmailRequest(basicInformation);
+        mailService.send(emailSenderRequest);
 
         RegisterUserResponse response = new RegisterUserResponse();
         response.setMessage(REGISTRATION_SUCCESSFUL.name());
@@ -62,26 +75,60 @@ public class Go2gedaDriverService implements DriverService{
     }
 
     @Override
-    public Driver findDriverByUser(User user) {
-        return null;
+    public Driver findDriverByEmail(String email) {
+        return driverRepository.findDriverByEmail(email).orElseThrow(()-> new UserNotFound(USER_NOT_FOUND.name()));
     }
 
     @Override
-    public OkResponse verifyDriverAccountDetails(AccountDetailsVerificationRequest accountDetailsVerificationRequest, Long userId) {
-        Driver foundDriver = driverRepository.findById(userId).orElseThrow(()->new UserNotFound(USER_NOT_FOUND.name()));
+    public OkResponse verifyDriverAccountDetails(AccountDetailsVerificationRequest accountDetailsVerificationRequest, String email) {
+        Driver foundDriver = findDriverByEmail(email);
 
-        DriversProfile profile = new DriversProfile();
+        DriverInformation driverInformation = new DriverInformation();
 
         AccountDetails accountDetails = new AccountDetails();
         accountDetails.setAccountNUmber(accountDetailsVerificationRequest.getAccountNUmber());
         accountDetails.setBankName(accountDetailsVerificationRequest.getBankName());
         accountDetails.setBankVerificationNUmber(accountDetailsVerificationRequest.getBankVerificationNUmber());
 
-        profile.setAccountDetails(accountDetails);
-        foundDriver.setProfile(profile);
 
+        driverInformation.setAccountDetails(accountDetails);
+        foundDriver.setDriverInformation(driverInformation);
+
+        Driver saved = driverRepository.save(foundDriver);
+
+        log.info(saved.toString());
         OkResponse okResponse = new OkResponse();
         okResponse.setMessage(VERIFICATION_SUCCESSFUL);
         return okResponse;
+    }
+
+
+    @Override
+    public OkResponse verifyDriverLicense(DriverLicenceVerificationRequest driverLicenceVerificationRequest) {
+        return null;
+    }
+
+    @Override
+    public OkResponse verifyAddress(AddressVerificationRequest addressVerificationRequest, String email) {
+        String localGovernment = addressVerificationRequest.getLocalGovernment();
+        String state = addressVerificationRequest.getState();
+        String homeAddress = addressVerificationRequest.getHomeAddress();
+
+        Address newAddress = new Address();
+        newAddress.setHomeAddress(homeAddress);
+        newAddress.setState(state);
+        newAddress.setLocalGovernment(localGovernment);
+
+        Driver foundDriver = findDriverByEmail(email);
+        foundDriver.getUser().setAddress(newAddress);
+
+        driverRepository.save(foundDriver);
+
+        OkResponse response = new OkResponse();
+        response.setMessage(VERIFIED_SUCCESSFUL.name());
+
+        return response;
+
+
     }
 }

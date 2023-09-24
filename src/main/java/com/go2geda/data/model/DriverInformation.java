@@ -8,16 +8,13 @@ import lombok.Setter;
 @Setter
 @Entity
 @Table(name = "DriverProfileTable")
-public class DriversProfile{
+public class DriverInformation {
  @Id
  @GeneratedValue(strategy = GenerationType.AUTO)
  private Long id;
-
- @OneToOne
- private Profile profile;
- @OneToOne
+ @OneToOne(cascade = CascadeType.ALL)
  private DriverLicence driverLicence;
- @OneToOne
+ @OneToOne(cascade = CascadeType.ALL)
  private AccountDetails accountDetails;
 
 }
