@@ -1,9 +1,9 @@
 package com.go2geda.utils;
 
 import com.go2geda.appConfig.AppConfig;
-import com.go2geda.data.model.BasicInformation;
-import com.go2geda.dto.request.EmailSenderRequest;
-import com.go2geda.dto.request.MailInfo;
+import com.go2geda.commuter.data.model.BasicInformation;
+import com.go2geda.user.dto.request.EmailSenderRequest;
+import com.go2geda.user.dto.request.MailInfo;
 import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 

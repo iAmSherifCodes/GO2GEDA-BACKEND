@@ -1,17 +1,8 @@
 package com.go2geda.appConfig;
 
-import com.go2geda.data.model.User;
-import com.go2geda.dto.request.EmailSenderRequest;
-import com.go2geda.dto.request.MailInfo;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
-
-import java.util.ArrayList;
-import java.util.List;
-
-import static com.go2geda.utils.AppUtils.generateActivationLink;
-import static com.go2geda.utils.AppUtils.getMailTemplate;
 
 @Configuration @Getter
 public class AppConfig {
@@ -30,5 +21,39 @@ public class AppConfig {
     @Value("${app.base.url}")
     private String baseUrl;
 
+    @Value("${cloud.api.key}")
+    private String cloudApiKey;
 
+    @Value("${cloud.secret.key}")
+    private String cloudSecret;
+
+    @Value("${name.cloudinary.cloud}")
+    private String cloudName;
+
+    public String getDriverLicenseFrontPictureTest() {
+        return driverLicenseFrontPictureTest;
+    }
+
+    public String getDriverLicenseBackPictureTest() {
+        return driverLicenseBackPictureTest;
+    }
+
+    @Value("${front.license}")
+    private String driverLicenseFrontPictureTest;
+
+    @Value("${back.license}")
+    private String driverLicenseBackPictureTest;
+
+
+    public String getCloudApiKey() {
+        return cloudApiKey;
+    }
+
+    public String getCloudSecret() {
+        return cloudSecret;
+    }
+
+    public Object getCloudName() {
+        return cloudName;
+    }
 }

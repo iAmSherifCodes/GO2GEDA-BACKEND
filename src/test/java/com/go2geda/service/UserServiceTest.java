@@ -1,7 +1,9 @@
 package com.go2geda.service;
 
-import com.go2geda.dto.request.CommuterRegisterUserRequest;
-import com.go2geda.dto.response.RegisterUserResponse;
+import com.go2geda.commuter.service.CommuterService;
+import com.go2geda.driver.service.DriverService;
+import com.go2geda.commuter.dto.request.CommuterRegisterUserRequest;
+import com.go2geda.user.dto.response.RegisterUserResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
