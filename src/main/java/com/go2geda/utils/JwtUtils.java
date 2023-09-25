@@ -23,7 +23,7 @@ public class JwtUtils {
                 .withClaim("roles", authorities)
                 .withIssuer(APP_NAME)
                 .withExpiresAt(Instant.now().plusSeconds(3600*24))
-                .sign(Algorithm.HMAC512("secret"));
+                .sign(Algorithm.HMAC512("null_value"));
         return token;
     }
 }

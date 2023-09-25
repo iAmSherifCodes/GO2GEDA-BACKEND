@@ -135,9 +135,9 @@ public class DriverServiceTest {
     @Test
     void verifyDriverAddress(){
         DriverRegisterUserRequest registerUserRequest = new DriverRegisterUserRequest();
-        registerUserRequest.setEmail("verifydriveradress@gmail.com");
-        registerUserRequest.setFirstName("Dey");
-        registerUserRequest.setLastName("Play");
+        registerUserRequest.setEmail("dejmartins@gmail.com");
+        registerUserRequest.setFirstName("Dej");
+        registerUserRequest.setLastName("Martins");
         registerUserRequest.setPhoneNumber("90787878");
         registerUserRequest.setPassword("deyplaypassword");
 
@@ -152,7 +152,7 @@ public class DriverServiceTest {
         request.setState(state);
         request.setLocalGovernment(localGovernment);
 
-        OkResponse response = driverService.verifyAddress(request,  "verifydriveradress@gmail.com");
+        OkResponse response = driverService.verifyAddress(request,  "dejalltime@gmail.com");
 
         assertThat(response).isNotNull();
     }

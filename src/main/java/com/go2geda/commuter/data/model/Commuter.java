@@ -1,6 +1,7 @@
 package com.go2geda.commuter.data.model;
 
 
+import com.go2geda.user.data.model.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;

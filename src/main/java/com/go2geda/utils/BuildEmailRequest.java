@@ -1,7 +1,8 @@
 package com.go2geda.utils;
 
 import com.go2geda.appConfig.AppConfig;
-import com.go2geda.commuter.data.model.BasicInformation;
+import com.go2geda.user.data.model.BasicInformation;
+import com.go2geda.user.data.model.User;
 import com.go2geda.user.dto.request.EmailSenderRequest;
 import com.go2geda.user.dto.request.MailInfo;
 import lombok.AllArgsConstructor;
@@ -20,17 +21,17 @@ public class BuildEmailRequest {
 
     private AppConfig appConfig;
 
-    public EmailSenderRequest buildEmailRequest(BasicInformation savedUser){
+    public EmailSenderRequest buildEmailRequest(User savedUser){
         EmailSenderRequest request =new EmailSenderRequest();
         List<MailInfo> recipients = new ArrayList<>();
-        MailInfo recipient = new MailInfo(savedUser.getFirstName() + SPACE + savedUser.getLastName(), savedUser.getEmail());
+        MailInfo recipient = new MailInfo(savedUser.getBasicInformation().getFirstName() + SPACE + savedUser.getBasicInformation().getLastName(), savedUser.getBasicInformation().getEmail());
         recipients.add(recipient);
         request.setTo(recipients);
         request.setSubject(WELCOME_MAIL_SUBJECT);
         String activationLink =
-                generateActivationLink(appConfig.getBaseUrl(), savedUser.getEmail());
+                generateActivationLink(appConfig.getBaseUrl(), savedUser.getBasicInformation().getEmail());
         String emailTemplate = getMailTemplate();
-        String mailContent = String.format(emailTemplate, savedUser.getFirstName(), activationLink);
+        String mailContent = String.format(emailTemplate, savedUser.getBasicInformation().getFirstName(), activationLink);
         request.setHtmlContent(mailContent);
         return request;
     }

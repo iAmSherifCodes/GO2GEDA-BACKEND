@@ -1,4 +1,4 @@
-package com.go2geda.commuter.data.model;
+package com.go2geda.user.data.model;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;

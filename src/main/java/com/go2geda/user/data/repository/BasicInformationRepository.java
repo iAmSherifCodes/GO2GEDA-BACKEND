@@ -1,6 +1,6 @@
-package com.go2geda.commuter.data.repositories;
+package com.go2geda.user.data.repository;
 
-import com.go2geda.commuter.data.model.BasicInformation;
+import com.go2geda.user.data.model.BasicInformation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

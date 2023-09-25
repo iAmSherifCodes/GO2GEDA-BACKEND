@@ -1,4 +1,4 @@
-package com.go2geda.commuter.data.model;
+package com.go2geda.user.data.model;
 
 import com.go2geda.user.enums.Role;
 import jakarta.persistence.*;
@@ -11,10 +11,11 @@ import java.util.List;
 @Getter
 @Table(name= "Go2GedaUser")
 public class User {
+    public boolean isActive;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(cascade = CascadeType.ALL)
     private BasicInformation basicInformation;
     @OneToMany
     private List<Review> reviews;
@@ -27,5 +28,6 @@ public class User {
     private Wallet wallet;
     @Enumerated(EnumType.STRING)
     private Role role;
+    private boolean isVerified;
 
 }

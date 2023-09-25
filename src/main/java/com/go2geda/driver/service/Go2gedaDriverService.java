@@ -1,11 +1,11 @@
 package com.go2geda.driver.service;
 
-import com.go2geda.commuter.data.model.Address;
-import com.go2geda.commuter.data.model.BasicInformation;
-import com.go2geda.commuter.data.model.User;
-import com.go2geda.commuter.data.repositories.BasicInformationRepository;
+import com.go2geda.user.data.model.Address;
+import com.go2geda.user.data.model.BasicInformation;
+import com.go2geda.user.data.model.User;
+import com.go2geda.user.data.repository.BasicInformationRepository;
 import com.go2geda.driver.data.repository.DriverRepository;
-import com.go2geda.commuter.data.repositories.UserRepository;
+import com.go2geda.user.data.repository.UserRepository;
 import com.go2geda.driver.data.model.AccountDetails;
 import com.go2geda.driver.data.model.Driver;
 import com.go2geda.driver.data.model.DriverInformation;
@@ -33,20 +33,17 @@ import static com.go2geda.utils.exception.ExceptionMessage.USER_NOT_FOUND;
 import static com.go2geda.utils.AppUtils.*;
 
 @Service @AllArgsConstructor @Slf4j
-public class Go2gedaDriverService implements DriverService, UserService {
+public class Go2gedaDriverService implements DriverService{
 
 
-    private final UserRepository userRepository;
     private final DriverRepository driverRepository;
-    private final BasicInformationRepository basicInformationRepository;
     private final CloudService cloudService;
 
     private final BuildEmailRequest buildEmailRequest;
     private final MailService mailService;
 
     @Override
-    public RegisterUserResponse register(DriverRegisterUserRequest request)
-    {
+    public RegisterUserResponse register(DriverRegisterUserRequest request) {
         String firstName = request.getFirstName();
         String lastName = request.getLastName();
         String email = request.getEmail();
@@ -73,7 +70,7 @@ public class Go2gedaDriverService implements DriverService, UserService {
 
         Driver savedDriver = driverRepository.save(newDriver);
         log.info(savedDriver.toString());
-        EmailSenderRequest emailSenderRequest = buildEmailRequest.buildEmailRequest(basicInformation);
+        EmailSenderRequest emailSenderRequest = buildEmailRequest.buildEmailRequest(newUser);
         mailService.send(emailSenderRequest);
 
         RegisterUserResponse response = new RegisterUserResponse();
@@ -147,7 +144,6 @@ public class Go2gedaDriverService implements DriverService, UserService {
         response.setMessage(VERIFIED_SUCCESSFUL.name());
 
         return response;
-
-
     }
+
 }
